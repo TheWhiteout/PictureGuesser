@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 public class GUITest {
 
@@ -203,6 +204,12 @@ public class GUITest {
 		fileReader.read(digits);
 		fileReader.close();
 		int highscore = Integer.parseInt(new String(digits).trim());
+
+		// Setting the colors and font for the JOptionPane
+		UIManager.put("OptionPane.background", Color.BLACK);
+		UIManager.put("Panel.background", Color.BLACK);
+		UIManager.put("OptionPane.messageForeground", Color.WHITE);
+		UIManager.put("OptionPane.font", new Font("Tahoma", Font.BOLD, 20));
 
 		if (scoreNumber > highscore) {
 			FileWriter fileWriter = new FileWriter(file);
