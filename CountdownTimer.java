@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JLabel;
@@ -18,11 +19,12 @@ public class CountdownTimer implements ActionListener {
 	private SimpleDateFormat format = new SimpleDateFormat("mm:ss");
 
 	// Constructor for different screens
+	// public Timer(int delay, ActionListener listener);
 	CountdownTimer(double ratio) {
 		timer = new Timer(10, this);
 		countdown.setFont(new Font("Tahoma", Font.BOLD, GUITest.screen(60)));
 		countdown.setForeground(Color.white);
-		countdown.setBounds(GUITest.screen(2330), GUITest.screen(1320), GUITest.screen(230), GUITest.screen(120));
+		GUITest.setBoundsScreen(countdown, 2330, 1320, 230, 120);
 	}
 
 	public void start() {
@@ -37,7 +39,7 @@ public class CountdownTimer implements ActionListener {
 		bonusTime += 3000;
 	}
 
-	public void subtract10sec() {
+	public void subtract10sec() throws IOException {
 		bonusTime -= 10000;
 		if (clockTime >= duration + bonusTime) {
 			clockTime = duration + bonusTime;
@@ -57,7 +59,11 @@ public class CountdownTimer implements ActionListener {
 		if (clockTime >= duration + bonusTime) {
 			clockTime = duration + bonusTime;
 			stop();
-			GUITest.finalScore();
+			try {
+				GUITest.finalScore();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		countdown.setText(format.format(duration + bonusTime - clockTime));
 	}
